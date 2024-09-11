@@ -1,20 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>闯关翻牌游戏</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>闯关翻牌游戏</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-
-<body>
-  <div class="game-container">
-    <div id="step-counter">步数: 0</div>
-    <div class="grid-container"></div>
-    <button id="reset-button">重新开始</button>
-  </div>
-  <script src="script.js"></script>
-</body>
-
+  <body>
+    <h1>幸运翻翻乐</h1>
+    <div class="game-container">
+      <div id="step-counter">步数: 0</div>
+      <div class="grid-container"></div>
+      <button id="reset-button">重新开始</button>
+    </div>
+    <div class="image-picker-container">
+      <p>选择惩罚和奖励图片</p>
+      <div>
+        <label for="image-upload">选择惩罚</label>
+        <input type="file" id="image-upload-bomb" accept="image/*" />
+      </div>
+      <div>
+        <label for="image-upload">选择奖励</label>
+        <input type="file" id="image-upload-reward" accept="image/*" />
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
 </html>
