@@ -5,6 +5,8 @@ const shuffleCardBtn = document.getElementById("shuffleCardBtn");
 const resetGameBtn = document.getElementById("resetGameBtn");
 const loadBtn = document.getElementById("loadBtn");
 const saveBtn = document.getElementById("saveBtn");
+const randomBtn = document.getElementById("randomBtn");
+const clearBtn = document.getElementById("clearBtn");
 
 let prizes = JSON.parse(localStorage.getItem("prizes")) || [];
 
@@ -164,13 +166,71 @@ function resetGame() {
   prizeInput.value = "";
 }
 
+// 初始化惩罚列表
+const punishmentsContainer = document.getElementById("punishments");
+const initialPunishments =
+  JSON.parse(localStorage.getItem("punishments")) || [];
+
+function addPunishments() {
+  punishmentsContainer.innerHTML = ""; // 清空现有的惩罚列表
+  initialPunishments.forEach((punishment) => {
+    const punishmentItem = document.createElement("div");
+    punishmentItem.className = "punishment-item";
+    punishmentItem.textContent = punishment;
+    punishmentsContainer.appendChild(punishmentItem);
+  });
+}
+
+// 添加自定义惩罚
+function addCustomPunishment() {
+  const customPunishmentInput = document.getElementById(
+    "custom-punishment-input"
+  );
+  const customPunishment = customPunishmentInput.value.trim();
+  if (customPunishment) {
+    const punishmentItem = document.createElement("div");
+    punishmentItem.className = "punishment-item";
+    punishmentItem.textContent = customPunishment;
+    punishmentsContainer.appendChild(punishmentItem);
+    initialPunishments.push(customPunishment); // 将新惩罚添加到数组中
+    localStorage.setItem("punishments", JSON.stringify(initialPunishments)); // 更新本地存储
+    customPunishmentInput.value = ""; // 清空输入框
+  } else {
+    alert("请输入惩罚内容");
+  }
+}
+
+function selectRandomPunishment() {
+  var punishments = document.querySelectorAll(".punishment-item");
+  var randomIndex = Math.floor(Math.random() * punishments.length);
+  var selectedPunishment = punishments[randomIndex].textContent;
+
+  // 将选中的惩罚显示在DOM上
+  document.getElementById("selected-punishment").textContent =
+    "选中的惩罚是: " + selectedPunishment;
+}
+
+function clearPunishment() {
+  document.getElementById("selected-punishment").textContent = "";
+  punishmentsContainer.innerHTML = "";
+  initialPunishments = [];
+  localStorage.removeItem("punishments");
+}
+
+// 页面加载时初始化惩罚列表
+addPunishments();
+
 // 绑定按钮事件
 addCardBtn.addEventListener("click", addCard);
 shuffleCardBtn.addEventListener("click", shuffleCards);
 resetGameBtn.addEventListener("click", resetGame);
 loadBtn.addEventListener("click", importPrizes);
 saveBtn.addEventListener("click", exportPrizes);
+randomBtn.addEventListener("click", selectRandomPunishment);
+clearBtn.addEventListener("click", clearPunishment);
 
+// 初始化惩罚
+addPunishments();
 // 初始化卡片
 if (prizes.length > 0) {
   prizes.forEach((prize, index) => {

@@ -19,6 +19,20 @@
       <button id="saveBtn">保存</button>
       <button id="loadBtn">加载</button>
     </div>
+    <div class="punishment">
+      <div class="custom-punishment-form">
+        <input
+          type="text"
+          id="custom-punishment-input"
+          placeholder="输入随机惩罚"
+        />
+        <button onclick="addCustomPunishment()">添加随机惩罚</button>
+      </div>
+      <div id="punishments"></div>
+      <button id="randomBtn">抽取随机惩罚</button>
+      <button id="clearBtn">清空惩罚列表</button>
+      <div id="selected-punishment"></div>
+    </div>
     <script src="script.js"></script>
   </body>
 </html>

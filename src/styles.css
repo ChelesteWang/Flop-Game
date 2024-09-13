@@ -3,7 +3,6 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   background-color: #f7f7f7;
   margin: 0;
   font-family: "Arial", sans-serif;
@@ -132,4 +131,51 @@ button:hover {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+#punishments {
+  width: 200px;
+  height: 300px;
+  overflow-y: auto;
+  border: 2px solid #000;
+  margin: 20px;
+  padding: 10px;
+}
+
+.punishment-item {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.punishment-item:last-child {
+  border-bottom: none;
+}
+
+#selected-punishment {
+  font-size: 20px;
+  margin-left: 20px;
+  color: red;
+}
+
+.custom-punishment-form {
+  margin-bottom: 20px;
+}
+
+#custom-punishment-input {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  padding: 8px;
+  width: 200px;
+}
+
+.punishment {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.punishment button {
+  margin-left: 10px;
 }
