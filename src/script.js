@@ -194,7 +194,10 @@ function addCustomPunishment() {
     punishmentItem.textContent = customPunishment;
     punishmentsContainer.appendChild(punishmentItem);
     initialPunishments.push(customPunishment); // 将新惩罚添加到数组中
-    localStorage.setItem("punishments", JSON.stringify(initialPunishments)); // 更新本地存储
+    localStorage.setItem(
+      "punishments",
+      JSON.stringify(initialPunishments) || []
+    ); // 更新本地存储
     customPunishmentInput.value = ""; // 清空输入框
   } else {
     alert("请输入惩罚内容");
@@ -238,7 +241,10 @@ function importPunishments() {
             punishmentItem.textContent = punishment;
             punishmentsContainer.appendChild(punishmentItem);
           });
-          localStorage.setItem("punishments", JSON.stringify(punishments)); // 更新本地存储
+          localStorage.setItem(
+            "punishments",
+            JSON.stringify(importedPunishments)
+          ); // 更新本地存储
         } catch (error) {
           console.error("导入失败：", error);
           alert("导入失败，请检查文件格式。");
