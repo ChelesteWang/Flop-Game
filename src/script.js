@@ -7,6 +7,8 @@ const loadBtn = document.getElementById("loadBtn");
 const saveBtn = document.getElementById("saveBtn");
 const randomBtn = document.getElementById("randomBtn");
 const clearBtn = document.getElementById("clearBtn");
+const savePunishmentBtn = document.getElementById("savePunishmentBtn");
+const loadPunishmentBtn = document.getElementById("loadPunishmentBtn");
 
 let prizes = JSON.parse(localStorage.getItem("prizes")) || [];
 
@@ -168,8 +170,7 @@ function resetGame() {
 
 // 初始化惩罚列表
 const punishmentsContainer = document.getElementById("punishments");
-const initialPunishments =
-  JSON.parse(localStorage.getItem("punishments")) || [];
+let initialPunishments = JSON.parse(localStorage.getItem("punishments")) || [];
 
 function addPunishments() {
   punishmentsContainer.innerHTML = ""; // 清空现有的惩罚列表
@@ -213,7 +214,53 @@ function selectRandomPunishment() {
 function clearPunishment() {
   document.getElementById("selected-punishment").textContent = "";
   punishmentsContainer.innerHTML = "";
+  initialPunishments = [];
   localStorage.removeItem("punishments");
+}
+
+// 从文件读取
+function importPunishments() {
+  const input = document.createElement("input");
+  input.type = "file";
+  input.accept = "application/json";
+
+  input.addEventListener("change", () => {
+    const file = input.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const importedPunishments = JSON.parse(reader.result);
+          punishmentsContainer.innerHTML = "";
+          importedPunishments.forEach((punishment) => {
+            const punishmentItem = document.createElement("div");
+            punishmentItem.className = "punishment-item";
+            punishmentItem.textContent = punishment;
+            punishmentsContainer.appendChild(punishmentItem);
+          });
+          localStorage.setItem("punishments", JSON.stringify(punishments)); // 更新本地存储
+        } catch (error) {
+          console.error("导入失败：", error);
+          alert("导入失败，请检查文件格式。");
+        }
+      };
+      reader.readAsText(file);
+    } else {
+      alert("请选择一个文件。");
+    }
+  });
+  input.click();
+}
+
+function exportPunishments() {
+  const punishments = localStorage.getItem("punishments") || "[]";
+  const blob = new Blob([punishments], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "punishments.json";
+  a.click();
+  URL.revokeObjectURL(url);
 }
 
 // 页面加载时初始化惩罚列表
@@ -227,6 +274,8 @@ loadBtn.addEventListener("click", importPrizes);
 saveBtn.addEventListener("click", exportPrizes);
 randomBtn.addEventListener("click", selectRandomPunishment);
 clearBtn.addEventListener("click", clearPunishment);
+loadPunishmentBtn.addEventListener("click", importPunishments);
+savePunishmentBtn.addEventListener("click", exportPunishments);
 
 // 初始化惩罚
 addPunishments();
