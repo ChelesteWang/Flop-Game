@@ -213,7 +213,6 @@ function selectRandomPunishment() {
 function clearPunishment() {
   document.getElementById("selected-punishment").textContent = "";
   punishmentsContainer.innerHTML = "";
-  initialPunishments = [];
   localStorage.removeItem("punishments");
 }
 
