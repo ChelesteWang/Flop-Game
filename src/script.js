@@ -263,9 +263,6 @@ function exportPunishments() {
   URL.revokeObjectURL(url);
 }
 
-// 页面加载时初始化惩罚列表
-addPunishments();
-
 // 绑定按钮事件
 addCardBtn.addEventListener("click", addCard);
 shuffleCardBtn.addEventListener("click", shuffleCards);
@@ -279,6 +276,7 @@ savePunishmentBtn.addEventListener("click", exportPunishments);
 
 // 初始化惩罚
 addPunishments();
+
 // 初始化卡片
 if (prizes.length > 0) {
   prizes.forEach((prize, index) => {
