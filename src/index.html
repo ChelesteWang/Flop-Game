@@ -1,30 +1,118 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>闯关翻牌游戏</title>
+    <title>幸运翻翻乐</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
-
   <body>
-    <h1>幸运翻翻乐</h1>
-    <div class="game-container">
-      <div id="step-counter">步数: 0</div>
-      <div class="grid-container"></div>
-      <button id="reset-button">重新开始</button>
-    </div>
-    <div class="image-picker-container">
-      <p>选择惩罚和奖励图片</p>
-      <div>
-        <label for="image-upload">选择惩罚</label>
-        <input type="file" id="image-upload-bomb" accept="image/*" />
+    <h1 class="title">幸运翻翻乐</h1>
+    
+    <div class="main-container">
+      <!-- Tab 导航 -->
+      <div class="tab-container">
+        <button class="tab-button active" data-tab="cards">翻卡游戏</button>
+        <button class="tab-button" data-tab="punishment">随机惩罚</button>
       </div>
-      <div>
-        <label for="image-upload">选择奖励</label>
-        <input type="file" id="image-upload-reward" accept="image/*" />
+
+      <!-- 翻卡游戏区域 -->
+      <div id="cards-section" class="tab-content active">
+        <div class="cards-section">
+          <div class="card-container">
+            <!-- 卡片列表 -->
+          </div>
+          <div class="controls">
+            <div class="edit-mode-toggle">
+              <label>
+                <input type="checkbox" id="editModeToggle"> 编辑模式
+              </label>
+            </div>
+            
+            <!-- 编辑模式控制面板 -->
+            <div class="edit-panel" style="display: none;">
+              <div class="edit-section">
+                <h3>奖品管理</h3>
+                <div class="input-group">
+                  <input type="text" id="prizeInput" placeholder="输入奖品名称" class="edit-input" />
+                  <div class="image-controls">
+                    <input type="file" id="prizeImageInput" accept="image/*" style="display: none;" />
+                    <button type="button" id="uploadImageBtn" class="btn btn-primary">上传图片</button>
+                    <button type="button" id="removeImageBtn" class="btn btn-secondary">移除图片</button>
+                  </div>
+                  <div class="action-controls">
+                    <button id="addCardBtn" class="btn btn-success">添加奖品</button>
+                    <button id="removeCardBtn" class="btn btn-danger">移除选中卡片</button>
+                  </div>
+                </div>
+                <div id="imagePreview" class="image-preview">
+                  <img id="previewImg" src="" alt="预览" />
+                </div>
+              </div>
+              
+              <div class="edit-section">
+                <h3>数据管理</h3>
+                <div class="data-controls">
+                  <button id="saveBtn" class="btn btn-info">保存配置</button>
+                  <button id="loadBtn" class="btn btn-info">加载配置</button>
+                  <button id="resetGameBtn" class="btn btn-warning">清空数据</button>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 普通模式按钮 -->
+            <div class="normal-controls">
+              <button id="shuffleCardBtn" class="btn btn-primary">洗牌</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 随机惩罚区域 -->
+      <div id="punishment-section" class="tab-content">
+        <div class="punishment-section">
+          <div class="punishment-container">
+            <div class="custom-punishment-form">
+              <input
+                type="text"
+                id="custom-punishment-input"
+                placeholder="输入随机惩罚"
+              />
+              <button onclick="addCustomPunishment()">添加随机惩罚</button>
+            </div>
+            <div class="punishment-content">
+              <div id="punishments"></div>
+              <div class="punishment-actions">
+                <button id="randomBtn">抽取随机惩罚</button>
+                <button id="clearBtn">清空惩罚列表</button>
+                <button id="savePunishmentBtn">保存惩罚</button>
+                <button id="loadPunishmentBtn">加载惩罚</button>
+              </div>
+            </div>
+            <div id="selected-punishment"></div>
+          </div>
+        </div>
       </div>
     </div>
     <script src="script.js"></script>
+    <!-- 刮刮乐模态框 -->
+    <div id="scratchModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>刮刮乐抽奖</h2>
+        <div class="scratch-container">
+          <div class="prize-display">
+            <div id="modalPrizeImage" class="prize-image">
+              <img id="prizeImg" src="" alt="奖品图片" style="display: none;">
+              <div class="prize-placeholder">🎁</div>
+            </div>
+            <div class="prize-content">
+              <p id="modalPrizeName">用手指刮开涂层查看奖品</p>
+            </div>
+          </div>
+          <canvas id="scratchCanvas" width="300" height="200"></canvas>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
